@@ -44,7 +44,7 @@ public class HomeController {
             map.put("user",user);
             list.add(map);
         }
-
+//aa
         model.addAttribute("list",list);
         return "/index";
     }
