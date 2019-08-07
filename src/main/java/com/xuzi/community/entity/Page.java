@@ -1,4 +1,4 @@
-package com.nowcoder.community.entity;
+package com.xuzi.community.entity;
 
 /**
  * 封装分页相关的信息.

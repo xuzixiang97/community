@@ -1,7 +1,7 @@
-package com.nowcoder.community.service.impl;
+package com.xuzi.community.service.impl;
 
-import com.nowcoder.community.dao.AlphaDao;
-import com.nowcoder.community.service.AlphaService;
+import com.xuzi.community.dao.AlphaDao;
+import com.xuzi.community.service.AlphaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

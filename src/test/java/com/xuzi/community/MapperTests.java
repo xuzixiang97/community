@@ -1,8 +1,8 @@
-package com.nowcoder.community;
+package com.xuzi.community;
 
-import com.nowcoder.community.dao.DiscussPostMapper;
-import com.nowcoder.community.dao.UserMapper;
-import com.nowcoder.community.entity.User;
+import com.xuzi.community.dao.DiscussPostMapper;
+import com.xuzi.community.dao.UserMapper;
+import com.xuzi.community.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class MapperTests {
         user.setPassword("123456");
         user.setSalt("abc");
         user.setEmail("test@qq.com");
-        user.setHeaderUrl("http://www.nowcoder.com/101.png");
+        user.setHeaderUrl("http://www.xuzi.com/101.png");
         user.setCreateTime(new Date());
 
         int rows = userMapper.insertUser(user);
@@ -55,7 +55,7 @@ public class MapperTests {
         int rows = userMapper.updateStatus(150, 1);
         System.out.println(rows);
 
-        rows = userMapper.updateHeader(150, "http://www.nowcoder.com/102.png");
+        rows = userMapper.updateHeader(150, "http://www.xuzi.com/102.png");
         System.out.println(rows);
 
         rows = userMapper.updatePassword(150, "hello");

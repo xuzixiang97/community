@@ -1,6 +1,6 @@
-package com.nowcoder.community.dao;
+package com.xuzi.community.dao;
 
-import com.nowcoder.community.entity.User;
+import com.xuzi.community.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

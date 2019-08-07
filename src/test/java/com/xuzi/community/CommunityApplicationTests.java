@@ -1,6 +1,6 @@
-package com.nowcoder.community;
+package com.xuzi.community;
 
-import com.nowcoder.community.dao.AlphaDao;
+import com.xuzi.community.dao.AlphaDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;

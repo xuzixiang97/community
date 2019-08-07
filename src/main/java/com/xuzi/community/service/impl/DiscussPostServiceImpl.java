@@ -1,8 +1,8 @@
-package com.nowcoder.community.service.impl;
+package com.xuzi.community.service.impl;
 
-import com.nowcoder.community.dao.DiscussPostMapper;
-import com.nowcoder.community.entity.DiscussPost;
-import com.nowcoder.community.service.DiscussPostService;
+import com.xuzi.community.dao.DiscussPostMapper;
+import com.xuzi.community.entity.DiscussPost;
+import com.xuzi.community.service.DiscussPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

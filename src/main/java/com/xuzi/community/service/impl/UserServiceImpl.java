@@ -1,8 +1,8 @@
-package com.nowcoder.community.service.impl;
+package com.xuzi.community.service.impl;
 
-import com.nowcoder.community.dao.UserMapper;
-import com.nowcoder.community.entity.User;
-import com.nowcoder.community.service.UserService;
+import com.xuzi.community.dao.UserMapper;
+import com.xuzi.community.entity.User;
+import com.xuzi.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.nowcoder.community.controller;
+package com.xuzi.community.controller;
 
-import com.nowcoder.community.service.AlphaService;
+import com.xuzi.community.service.AlphaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

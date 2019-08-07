@@ -1,6 +1,6 @@
-package com.nowcoder.community.dao.impl;
+package com.xuzi.community.dao.impl;
 
-import com.nowcoder.community.dao.AlphaDao;
+import com.xuzi.community.dao.AlphaDao;
 import org.springframework.stereotype.Repository;
 
 @Repository
