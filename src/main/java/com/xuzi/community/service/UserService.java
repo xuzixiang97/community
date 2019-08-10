@@ -1,5 +1,6 @@
 package com.xuzi.community.service;
 
+import com.xuzi.community.entity.LoginTicket;
 import com.xuzi.community.entity.User;
 
 import java.util.Map;
@@ -13,5 +14,14 @@ public interface UserService {
 
     //激活用户
     int activation(int userId, String code);
+
+    //用户登录
+    Map<String, Object> login(String username, String password, long expiredSeconds);
+
+    //用户登出
+    void logout(String ticket);
+
+    //查询登录凭证
+    LoginTicket findLoginTicket(String ticket);
 
 }
