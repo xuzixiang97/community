@@ -1,5 +1,6 @@
 package com.xuzi.community.controller;
 
+import com.xuzi.community.annotation.LoginRequired;
 import com.xuzi.community.entity.User;
 import com.xuzi.community.service.UserService;
 import com.xuzi.community.util.CommunityUtil;
@@ -47,6 +48,7 @@ public class UserController {
      * 跳转用户设置界面
      * @return
      */
+    @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
     public String getSettingPage() {
         return "/site/setting";
@@ -58,6 +60,7 @@ public class UserController {
      * @param model
      * @return
      */
+    @LoginRequired
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model) {
         if (headerImage == null) {
@@ -127,6 +130,7 @@ public class UserController {
      * @param model
      * @return
      */
+    @LoginRequired
     @RequestMapping(path = "/updatepassword", method = RequestMethod.POST)
     public String updatePassword(String oldPassword, String newPassword, Model model) {
 
