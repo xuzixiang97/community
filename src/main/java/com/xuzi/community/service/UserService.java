@@ -27,4 +27,7 @@ public interface UserService {
     //修改头像
     void updateHeader(String headerUrl, int id);
 
+    //修改密码
+    void updatePassword(int id, String newPassword);
+
 }

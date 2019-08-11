@@ -43,11 +43,21 @@ public class UserController {
     @Autowired
     private HostHolder hostHolder;
 
+    /**
+     * 跳转用户设置界面
+     * @return
+     */
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
     public String getSettingPage() {
         return "/site/setting";
     }
 
+    /**
+     * 修改用户头像
+     * @param headerImage
+     * @param model
+     * @return
+     */
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model) {
         if (headerImage == null) {
@@ -56,7 +66,7 @@ public class UserController {
         }
 
         String fileName = headerImage.getOriginalFilename();
-        String suffix = fileName.substring(fileName.lastIndexOf("."));
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
         if (StringUtils.isBlank(suffix)) {
             model.addAttribute("error", "文件的格式不正确!");
             return "/site/setting";
@@ -83,12 +93,17 @@ public class UserController {
         return "redirect:/index";
     }
 
+    /**
+     * 加载用户头像
+     * @param fileName
+     * @param response
+     */
     @RequestMapping(path = "/header/{fileName}", method = RequestMethod.GET)
     public void getHeader(@PathVariable("fileName") String fileName, HttpServletResponse response) {
         // 服务器存放路径
         fileName = uploadPath + "/" + fileName;
         // 文件后缀
-        String suffix = fileName.substring(fileName.lastIndexOf("."));
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
         // 响应图片
         response.setContentType("image/" + suffix);
         try (
@@ -104,5 +119,36 @@ public class UserController {
             logger.error("读取头像失败: " + e.getMessage());
         }
     }
+
+    /**
+     * 修改密码
+     * @param oldPassword
+     * @param newPassword
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "/updatepassword", method = RequestMethod.POST)
+    public String updatePassword(String oldPassword, String newPassword, Model model) {
+
+        if (StringUtils.isBlank(oldPassword)) {
+            model.addAttribute("oldPasswordMsg", "密码不能为空");
+            return "/site/setting";
+        }
+
+        if (StringUtils.isBlank(newPassword)) {
+            model.addAttribute("newPasswordMsg", "密码不能为空");
+            return "/site/setting";
+        }
+
+        User user = hostHolder.getUser();
+        if(CommunityUtil.md5(oldPassword + user.getSalt()).equals(user.getPassword())){
+            userService.updatePassword(user.getId(), CommunityUtil.md5(newPassword + user.getSalt()));
+            return "redirect:/logout";
+        }
+
+        model.addAttribute("oldPasswordMsg", "密码不正确");
+        return "/site/setting";
+    }
+
 
 }
