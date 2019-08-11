@@ -25,7 +25,7 @@ public class LoginTicketInterceptor implements HandlerInterceptor{
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String ticket = CookieUtil.getCookie(request, "ticket");
+        String ticket = CookieUtil.getValue(request, "ticket");
         if (ticket != null) {
             LoginTicket loginTicket = userService.findLoginTicket(ticket);
             if(loginTicket != null && loginTicket.getStatus() == 0 && loginTicket.getExpired().after(new Date())){
