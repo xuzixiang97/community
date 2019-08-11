@@ -162,4 +162,9 @@ public class UserServiceImpl implements UserService,CommunityConstant {
     public LoginTicket findLoginTicket(String ticket) {
         return loginTicketMapper.selectByTicket(ticket);
     }
+
+    @Override
+    public void updateHeader(String headerUrl, int id) {
+        userMapper.updateHeader(id, headerUrl);
+    }
 }

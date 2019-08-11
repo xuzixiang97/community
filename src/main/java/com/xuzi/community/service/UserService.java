@@ -24,4 +24,7 @@ public interface UserService {
     //查询登录凭证
     LoginTicket findLoginTicket(String ticket);
 
+    //修改头像
+    void updateHeader(String headerUrl, int id);
+
 }
