@@ -3,6 +3,7 @@ package com.xuzi.community;
 import com.xuzi.community.dao.DiscussPostMapper;
 import com.xuzi.community.dao.LoginTicketMapper;
 import com.xuzi.community.dao.UserMapper;
+import com.xuzi.community.entity.DiscussPost;
 import com.xuzi.community.entity.LoginTicket;
 import com.xuzi.community.entity.User;
 import org.junit.Test;
@@ -94,5 +95,13 @@ public class MapperTests {
         loginTicket = loginTicketMapper.selectByTicket("abc");
         System.out.println(loginTicket);
     }
+
+    @Test
+    public void testSelectDiscussById(){
+        DiscussPost discussPost = discussPostMapper.selectDiscussPostById(109);
+        System.out.println(discussPost);
+    }
+
+
 
 }

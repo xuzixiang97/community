@@ -12,4 +12,6 @@ public interface DiscussPostService {
     int selectDiscussPostRows(@Param("userId")int userId);
     //发帖
     int addDiscussPost(DiscussPost post);
+    //查询帖子
+    DiscussPost findDiscussPostById(int id);
 }
