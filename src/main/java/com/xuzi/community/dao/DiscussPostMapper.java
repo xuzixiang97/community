@@ -12,4 +12,6 @@ public interface DiscussPostMapper {
     List<DiscussPost> findDiscussPost(int userId, int offset, int limit);
     //查询帖子数量（用于分页）
     int selectDiscussPostRows(@Param("userId")int userId);
+    //发帖
+    int insertDiscussPost(DiscussPost discussPost);
 }
