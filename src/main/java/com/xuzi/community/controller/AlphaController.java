@@ -17,6 +17,8 @@ import java.util.Map;
 @RequestMapping("/alpha")
 public class AlphaController {
 
+    //咋回事
+
     @Autowired
     private AlphaService alphaService;
 
