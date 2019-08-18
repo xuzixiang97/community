@@ -14,4 +14,7 @@ public interface CommentService {
     //查询评论数量
     int findCommentCount(int entityType, int entityId);
 
+    //新增评论
+    int addComment(Comment comment);
+
 }

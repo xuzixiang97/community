@@ -14,4 +14,6 @@ public interface DiscussPostService {
     int addDiscussPost(DiscussPost post);
     //查询帖子
     DiscussPost findDiscussPostById(int id);
+    //修改帖子评论量
+    void updateCommentCount(int id, int commentCpunt);
 }
