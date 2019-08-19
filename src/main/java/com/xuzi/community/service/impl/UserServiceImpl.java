@@ -35,17 +35,21 @@ public class UserServiceImpl implements UserService,CommunityConstant {
     @Autowired
     private LoginTicketMapper loginTicketMapper;
 
-    @Override
-    public User findById(int id) {
-        return userMapper.selectById(id);
-    }
-
-
     @Value("${community.path.domain}")
     private String domain;
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
+
+    @Override
+    public User findById(int id) {
+        return userMapper.selectById(id);
+    }
+
+    @Override
+    public User findByName(String username) {
+        return userMapper.selectByName(username);
+    }
 
     @Override
     public Map<String, Object> register(User user) {

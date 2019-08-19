@@ -9,6 +9,8 @@ public interface UserService {
 
     User findById(int id);
 
+    User findByName(String username);
+
     //注册用户
     Map<String, Object> register(User user);
 
