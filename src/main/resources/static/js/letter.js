@@ -16,7 +16,7 @@ function send_letter() {
 			if(data.code == 0){
                 $("#hintBody").text("发送成功!");
 			}else{
-                $("#hintBody").text(data.message);
+                $("#hintBody").text(data.msg);
 			}
         }
 	)

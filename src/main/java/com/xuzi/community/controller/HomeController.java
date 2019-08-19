@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,9 +45,17 @@ public class HomeController {
             map.put("user",user);
             list.add(map);
         }
-//aa
         model.addAttribute("list",list);
         return "/index";
+    }
+
+    /**
+     * 跳转错误页面
+     * @return
+     */
+    @RequestMapping(path = "/error", method = RequestMethod.GET)
+    public String getErrorPage() {
+        return "/error/500";
     }
 
 }
