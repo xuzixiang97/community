@@ -4,7 +4,9 @@ import com.xuzi.community.entity.DiscussPost;
 import com.xuzi.community.entity.Page;
 import com.xuzi.community.entity.User;
 import com.xuzi.community.service.DiscussPostService;
+import com.xuzi.community.service.LikeService;
 import com.xuzi.community.service.UserService;
+import com.xuzi.community.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,16 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class HomeController {
+public class HomeController implements CommunityConstant{
 
     @Autowired
     private UserService userService;
 
     @Autowired
     private DiscussPostService discussPostService;
+
+    @Autowired
+    private LikeService likeService;
 
     /**
      * 讨论区首页
@@ -43,6 +48,7 @@ public class HomeController {
             User user = userService.findById(discussPost.getUserId());
             map.put("post",discussPost);
             map.put("user",user);
+            map.put("likeCount",likeService.findEntityLikeCount(ENTITY_TYPE_POST, discussPost.getId()));
             list.add(map);
         }
         model.addAttribute("list",list);
