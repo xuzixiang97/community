@@ -2,6 +2,7 @@ package com.xuzi.community.controller;
 
 import com.xuzi.community.annotation.LoginRequired;
 import com.xuzi.community.entity.User;
+import com.xuzi.community.service.LikeService;
 import com.xuzi.community.service.UserService;
 import com.xuzi.community.util.CommunityUtil;
 import com.xuzi.community.util.HostHolder;
@@ -44,8 +45,12 @@ public class UserController {
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private LikeService likeService;
+
     /**
      * 跳转用户设置界面
+     *
      * @return
      */
     @LoginRequired
@@ -56,6 +61,7 @@ public class UserController {
 
     /**
      * 修改用户头像
+     *
      * @param headerImage
      * @param model
      * @return
@@ -98,6 +104,7 @@ public class UserController {
 
     /**
      * 加载用户头像
+     *
      * @param fileName
      * @param response
      */
@@ -125,6 +132,7 @@ public class UserController {
 
     /**
      * 修改密码
+     *
      * @param oldPassword
      * @param newPassword
      * @param model
@@ -145,13 +153,35 @@ public class UserController {
         }
 
         User user = hostHolder.getUser();
-        if(CommunityUtil.md5(oldPassword + user.getSalt()).equals(user.getPassword())){
+        if (CommunityUtil.md5(oldPassword + user.getSalt()).equals(user.getPassword())) {
             userService.updatePassword(user.getId(), CommunityUtil.md5(newPassword + user.getSalt()));
             return "redirect:/logout";
         }
 
         model.addAttribute("oldPasswordMsg", "密码不正确");
         return "/site/setting";
+    }
+
+    /**
+     * 用户个人主页
+     * @param userId
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "/profile/{userId}", method = RequestMethod.GET)
+    public String getProfilePage(@PathVariable("userId") int userId, Model model) {
+        User user = userService.findById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在!");
+        }
+
+        // 用户
+        model.addAttribute("user", user);
+        // 点赞数量
+        int likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("likeCount", likeCount);
+
+        return "/site/profile";
     }
 
 
