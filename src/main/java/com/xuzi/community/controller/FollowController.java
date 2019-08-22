@@ -1,7 +1,9 @@
 package com.xuzi.community.controller;
 
+import com.xuzi.community.entity.Event;
 import com.xuzi.community.entity.Page;
 import com.xuzi.community.entity.User;
+import com.xuzi.community.event.EventProducer;
 import com.xuzi.community.service.FollowService;
 import com.xuzi.community.service.UserService;
 import com.xuzi.community.util.CommunityConstant;
@@ -30,6 +32,15 @@ public class FollowController implements CommunityConstant {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
+    /**
+     * 关注
+     * @param entityType
+     * @param entityId
+     * @return
+     */
     @RequestMapping(path = "/follow", method = RequestMethod.POST)
     @ResponseBody
     public String follow(int entityType, int entityId) {
@@ -37,9 +48,24 @@ public class FollowController implements CommunityConstant {
 
         followService.follow(user.getId(), entityType, entityId);
 
+        // 触发关注事件
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.fireEvent(event);
+
         return CommunityUtil.getJSONString(0, "已关注!");
     }
 
+    /**
+     * 取消关注
+     * @param entityType
+     * @param entityId
+     * @return
+     */
     @RequestMapping(path = "/unfollow", method = RequestMethod.POST)
     @ResponseBody
     public String unfollow(int entityType, int entityId) {
