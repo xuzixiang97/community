@@ -27,4 +27,17 @@ public interface MessageService {
 
     // 读私信，修改阅读状态
     int readMessage(List<Integer> ids);
+
+    // 查询某个主题下最新的通知
+    Message findLatestNotice(int userId, String topic);
+
+    // 查询某个主题所包含的通知数量
+    int findNoticeCount(int userId, String topic);
+
+    // 查询未读的通知的数量
+    int findNoticeUnreadCount(int userId, String topic);
+
+    // 查询某个主题所包含的通知列表
+    List<Message> findNotices(int userId, String topic, int offset, int limit);
+
 }
