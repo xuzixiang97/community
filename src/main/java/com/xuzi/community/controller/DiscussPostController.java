@@ -1,9 +1,7 @@
 package com.xuzi.community.controller;
 
-import com.xuzi.community.entity.Comment;
-import com.xuzi.community.entity.DiscussPost;
-import com.xuzi.community.entity.Page;
-import com.xuzi.community.entity.User;
+import com.xuzi.community.entity.*;
+import com.xuzi.community.event.EventProducer;
 import com.xuzi.community.service.CommentService;
 import com.xuzi.community.service.DiscussPostService;
 import com.xuzi.community.service.LikeService;
@@ -40,6 +38,9 @@ public class DiscussPostController implements CommunityConstant{
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     /**
      * 发布帖子
      * @param title
@@ -60,6 +61,14 @@ public class DiscussPostController implements CommunityConstant{
         post.setContent(content);
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
+
+        // 触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
 
         // 报错的情况,将来统一处理.
         return CommunityUtil.getJSONString(0, "发布成功!");
