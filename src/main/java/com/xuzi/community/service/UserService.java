@@ -2,7 +2,9 @@ package com.xuzi.community.service;
 
 import com.xuzi.community.entity.LoginTicket;
 import com.xuzi.community.entity.User;
+import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Collection;
 import java.util.Map;
 
 public interface UserService {
@@ -31,5 +33,8 @@ public interface UserService {
 
     //修改密码
     void updatePassword(int id, String newPassword);
+
+    //查询用户权限
+    Collection<? extends GrantedAuthority> getAuthorities(int userId);
 
 }
