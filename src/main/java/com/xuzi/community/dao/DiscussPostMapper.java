@@ -18,4 +18,8 @@ public interface DiscussPostMapper {
     DiscussPost selectDiscussPostById (int id);
     //修改回复数量
     void updateCommentCount(int id, int commentCount);
+    //修改帖子类型
+    int updateType(int id, int type);
+    //修改帖子状态
+    int updateStatus(int id, int status);
 }
