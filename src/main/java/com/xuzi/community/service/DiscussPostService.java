@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DiscussPostService {
     //查询讨论贴
-    List<DiscussPost> findDiscussPost(int userId, int offset, int limit);
+    List<DiscussPost> findDiscussPost(int userId, int offset, int limit, int orderMode);
 
     //查询帖子数量（用于分页）
     int selectDiscussPostRows(@Param("userId")int userId);
@@ -26,5 +26,8 @@ public interface DiscussPostService {
 
     //修改帖子状态
     int updateStatus(int id, int status);
+
+    //修改帖子分数
+    void updateScore(int postId, double score);
 
 }

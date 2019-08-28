@@ -71,7 +71,7 @@ public class MapperTests {
     @Test
     public void testDiscuss(){
         System.out.println(discussPostMapper.selectDiscussPostRows(0));
-        System.out.println(discussPostMapper.findDiscussPost(0,1,3));
+        System.out.println(discussPostMapper.findDiscussPost(0,1,3,0));
 
     }
 

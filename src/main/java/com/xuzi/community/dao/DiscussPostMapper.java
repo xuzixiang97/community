@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface DiscussPostMapper {
     //查询讨论贴
-    List<DiscussPost> findDiscussPost(int userId, int offset, int limit);
+    List<DiscussPost> findDiscussPost(int userId, int offset, int limit, int orderMode);
     //查询帖子数量（用于分页）
     int selectDiscussPostRows(@Param("userId")int userId);
     //发帖
@@ -22,4 +22,6 @@ public interface DiscussPostMapper {
     int updateType(int id, int type);
     //修改帖子状态
     int updateStatus(int id, int status);
+    //修改帖子分数
+    void updateScore(int id, double score);
 }

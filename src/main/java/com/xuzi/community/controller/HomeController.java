@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,11 +38,14 @@ public class HomeController implements CommunityConstant{
      * @return 社区首页
      */
     @RequestMapping(path = "/index")
-    public String index(Model model, Page page){
-        page.setRows(discussPostService.selectDiscussPostRows(0));
-        page.setPath("/index");
+    public String getIndexPage(Model model, Page page,
+        @RequestParam(name = "orderMode", defaultValue = "0") int orderMode) {
+            // 方法调用钱,SpringMVC会自动实例化Model和Page,并将Page注入Model.
+            // 所以,在thymeleaf中可以直接访问Page对象中的数据.
+            page.setRows(discussPostService.selectDiscussPostRows(0));
+            page.setPath("/index?orderMode=" + orderMode);
         List<Map<String,Object>> list  = new ArrayList<>();
-        List<DiscussPost> discussPostList = discussPostService.findDiscussPost(0, page.getOffset(), page.getLimit());
+        List<DiscussPost> discussPostList = discussPostService.findDiscussPost(0, page.getOffset(), page.getLimit(),orderMode);
 
         for(DiscussPost discussPost : discussPostList){
             Map<String,Object> map = new HashMap<>();
