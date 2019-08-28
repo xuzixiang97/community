@@ -1,5 +1,7 @@
 package com.xuzi.community.controller;
 
+import com.qiniu.util.Auth;
+import com.qiniu.util.StringMap;
 import com.xuzi.community.annotation.LoginRequired;
 import com.xuzi.community.entity.User;
 import com.xuzi.community.service.FollowService;
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -53,20 +56,51 @@ public class UserController implements CommunityConstant{
     @Autowired
     private FollowService followService;
 
-    /**
-     * 跳转用户设置界面
-     *
-     * @return
-     */
+    @Value("${qiniu.key.access}")
+    private String accessKey;
+
+    @Value("${qiniu.key.secret}")
+    private String secretKey;
+
+    @Value("${qiniu.bucket.header.name}")
+    private String headerBucketName;
+
+    @Value("${quniu.bucket.header.url}")
+    private String headerBucketUrl;
+
     @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
-    public String getSettingPage() {
+    public String getSettingPage(Model model) {
+        // 上传文件名称
+        String fileName = CommunityUtil.generateUUID();
+        // 设置响应信息
+        StringMap policy = new StringMap();
+        policy.put("returnBody", CommunityUtil.getJSONString(0));
+        // 生成上传凭证
+        Auth auth = Auth.create(accessKey, secretKey);
+        String uploadToken = auth.uploadToken(headerBucketName, fileName, 3600, policy);
+
+        model.addAttribute("uploadToken", uploadToken);
+        model.addAttribute("fileName", fileName);
+
         return "/site/setting";
     }
 
+    // 更新头像路径
+    @RequestMapping(path = "/header/url", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateHeaderUrl(String fileName) {
+        if (StringUtils.isBlank(fileName)) {
+            return CommunityUtil.getJSONString(1, "文件名不能为空!");
+        }
+
+        String url = headerBucketUrl + "/" + fileName;
+        userService.updateHeader(url, hostHolder.getUser().getId());
+
+        return CommunityUtil.getJSONString(0);
+    }
     /**
-     * 修改用户头像
-     *
+     * 修改用户头像（废弃）
      * @param headerImage
      * @param model
      * @return
@@ -108,8 +142,7 @@ public class UserController implements CommunityConstant{
     }
 
     /**
-     * 加载用户头像
-     *
+     * 加载用户头像（废弃）
      * @param fileName
      * @param response
      */
@@ -137,7 +170,6 @@ public class UserController implements CommunityConstant{
 
     /**
      * 修改密码
-     *
      * @param oldPassword
      * @param newPassword
      * @param model
